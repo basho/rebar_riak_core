@@ -1,15 +1,19 @@
 %% @doc Interface for riak_searchng-admin commands.
 -module({{appid}}_console).
--export([join/1,
-         leave/1,
-         remove/1,
+-export([staged_join/1,
+         down/1,
          ringready/1]).
 
-join([NodeStr]) ->
+staged_join([NodeStr]) ->
+    Node = list_to_atom(NodeStr),
+    join(NodeStr, fun riak_core:staged_join/1,
+         "Success: staged join request for ~p to ~p~n", [node(), Node]).
+
+join(NodeStr, JoinFn, SuccessFmt, SuccessArgs) ->
     try
-        case riak_core:join(NodeStr) of
+        case JoinFn(NodeStr) of
             ok ->
-                io:format("Sent join request to ~s~n", [NodeStr]),
+                io:format(SuccessFmt, SuccessArgs),
                 ok;
             {error, not_reachable} ->
                 io:format("Node ~s is not reachable!~n", [NodeStr]),
@@ -25,6 +29,10 @@ join([NodeStr]) ->
                 io:format("Failed: This node is already a member of a "
                           "cluster~n"),
                 error;
+            {error, self_join} ->
+                io:format("Failed: This node cannot join itself in a "
+                          "cluster~n"),
+                error;
             {error, _} ->
                 io:format("Join failed. Try again in a few moments.~n", []),
                 error
@@ -37,38 +45,18 @@ join([NodeStr]) ->
     end.
 
 
-leave([]) ->
+down([Node]) ->
     try
-        case riak_core:leave() of
+        case riak_core:down(list_to_atom(Node)) of
             ok ->
-                io:format("Success: ~p will shutdown after handing off "
-                          "its data~n", [node()]),
+                io:format("Success: ~p marked as down~n", [Node]),
                 ok;
-            {error, already_leaving} ->
-                io:format("~p is already in the process of leaving the "
-                          "cluster.~n", [node()]),
+            {error, legacy_mode} ->
+                io:format("Cluster is currently in legacy mode~n"),
                 ok;
-            {error, not_member} ->
-                io:format("Failed: ~p is not a member of the cluster.~n",
-                          [node()]),
+            {error, is_up} ->
+                io:format("Failed: ~s is up~n", [Node]),
                 error;
-            {error, only_member} ->
-                io:format("Failed: ~p is the only member.~n", [node()]),
-                error
-        end
-    catch
-        Exception:Reason ->
-            lager:error("Leave failed ~p:~p", [Exception, Reason]),
-            io:format("Leave failed, see log for details~n"),
-            error
-    end.
-
-remove([Node]) ->
-    try
-        case riak_core:remove(list_to_atom(Node)) of
-            ok ->
-                io:format("Success: ~p removed from the cluster~n", [Node]),
-                ok;
             {error, not_member} ->
                 io:format("Failed: ~p is not a member of the cluster.~n",
                           [Node]),
@@ -79,8 +67,8 @@ remove([Node]) ->
         end
     catch
         Exception:Reason ->
-            lager:error("Remove failed ~p:~p", [Exception, Reason]),
-            io:format("Remove failed, see log for details~n"),
+            lager:error("Down failed ~p:~p", [Exception, Reason]),
+            io:format("Down failed, see log for details~n"),
             error
     end.
 
