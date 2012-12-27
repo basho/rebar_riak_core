@@ -1,6 +1,5 @@
 {variables, [{appid, "myapp"}]}.
 
-
 %% .
 {template, "riak_core.gitignore",    ".gitignore"}.
 {template, "riak_core.Makefile",     "Makefile"}.
@@ -31,17 +30,25 @@
 
 %% ./src
 {dir, "src"}.
-{template, "riak_core_app.erl",                "src/{{appid}}_app.erl"}.
-{template, "riak_core_console.erl",            "src/{{appid}}_console.erl"}.
-{template, "riak_core_node_event_handler.erl", "src/{{appid}}_node_event_handler.erl"}.
-{template, "riak_core_ring_event_handler.erl", "src/{{appid}}_ring_event_handler.erl"}.
-{template, "riak_core_sup.erl",                "src/{{appid}}_sup.erl"}.
-{template, "riak_core_vnode.erl",              "src/{{appid}}_vnode.erl"}.
-{template, "riak_core_wm_ping.erl",            "src/{{appid}}_wm_ping.erl"}.
+{template, "riak_core_app.erl",                     "src/{{appid}}_app.erl"}.
+{template, "riak_core_console.erl",                 "src/{{appid}}_console.erl"}.
+{template, "riak_core_node_event_handler.erl",      "src/{{appid}}_node_event_handler.erl"}.
+{template, "riak_core_ring_event_handler.erl",      "src/{{appid}}_ring_event_handler.erl"}.
+{template, "riak_core_sup.erl",                     "src/{{appid}}_sup.erl"}.
+{template, "riak_core_vnode.erl",                   "src/{{appid}}_vnode.erl"}.
+{template, "riak_core_wm_ping.erl",                 "src/{{appid}}_wm_ping.erl"}.
 
-{template, "riak_core.app.src",                "src/{{appid}}.app.src"}.
-{template, "riak_core.erl",                    "src/{{appid}}.erl"}.
-{template, "riak_core.hrl",                    "src/{{appid}}.hrl"}.
+{template, "riak_core.app.src",                     "src/{{appid}}.app.src"}.
+{template, "riak_core.erl",                         "src/{{appid}}.erl"}.
+{template, "riak_core.hrl",                         "src/{{appid}}.hrl"}.
+{template, "riak_core_entity_coverage_fsm.erl",     "src/{{appid}}_entity_coverage_fsm.erl"}.
+{template, "riak_core_entity_coverage_fsm_sup.erl", "src/{{appid}}_entity_coverage_fsm_sup.erl"}.
+{template, "riak_core_entity_read_fsm.erl",         "src/{{appid}}_entity_read_fsm.erl"}.
+{template, "riak_core_entity_read_fsm_sup.erl",     "src/{{appid}}_entity_read_fsm_sup.erl"}.
+{template, "riak_core_entity_write_fsm.erl",        "src/{{appid}}_entity_write_fsm.erl"}.
+{template, "riak_core_entity_write_fsm_sup.erl",    "src/{{appid}}_entity_write_fsm_sup.erl"}.
+{template, "riak_core_entity_state.erl",            "src/{{appid}}_entity_state.erl"}.
+{template, "riak_core_obj.erl",                     "src/{{appid}}_obj.erl"}.
 
 
 %% ./apps
