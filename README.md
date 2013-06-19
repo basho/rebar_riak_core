@@ -134,3 +134,32 @@ automatically reloaded. Or attach to a running node and run
 
 to reload a specific module.
 
+FSMs
+----
+
+Example usage of coverage, read and writ.
+
+* firstapp_vnode is the name of the vnode
+* firstapp is the bucket and also the service name.
+
+
+coverage:
+
+    firstapp_entity_coverage_fsm:start(
+      {firstapp_vnode, firstapp},
+      list
+     ).
+
+read:
+
+    firstapp_entity_read_fsm:start(
+      {firstapp_vnode, firstapp},
+      get, Key
+     ).
+
+write:
+
+    firstapp_entity_write_fsm:write(
+      {firstapp_vnode, firstapp},
+      Key, Op, Val
+    ).

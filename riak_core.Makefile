@@ -1,24 +1,28 @@
+REBAR = $(shell pwd)/rebar
 .PHONY: deps
 
 all: deps compile
 
 compile:
-	./rebar compile
+	$(REBAR) compile
 
 deps:
-	./rebar get-deps
+	$(REBAR) get-deps
 
 clean:
-	./rebar clean
+	$(REBAR) clean
 
 distclean: clean devclean relclean
-	./rebar delete-deps
+	$(REBAR) delete-deps
 
 rel: all
-	./rebar generate
+	$(REBAR) generate
 
 relclean:
 	rm -rf rel/{{appid}}
+
+xref: all
+	$(REBAR) skip_deps=true xref
 
 stage : rel
 	$(foreach dep,$(wildcard deps/*), rm -rf rel/{{appid}}/lib/$(shell basename $(dep))-* && ln -sf $(abspath $(dep)) rel/{{appid}}/lib;)
@@ -48,7 +52,7 @@ $(eval devrel : $(foreach n,$(SEQ),dev$(n)))
 dev% : all
 	mkdir -p dev
 	rel/gen_dev $@ rel/vars/dev_vars.config.src rel/vars/$@_vars.config
-	(cd rel && ../rebar generate target_dir=../dev/$@ overlay_vars=vars/$@_vars.config)
+	(cd rel && $(REBAR) generate target_dir=../dev/$@ overlay_vars=vars/$@_vars.config)
 
 stagedev% : dev%
 	  $(foreach dep,$(wildcard deps/*), rm -rf dev/$^/lib/$(shell basename $(dep))* && ln -sf $(abspath $(dep)) dev/$^/lib;)
