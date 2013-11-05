@@ -17,6 +17,10 @@
          handle_coverage/4,
          handle_exit/3]).
 
+-ignore_xref([
+             start_vnode/1
+             ]).
+
 -record(state, {partition}).
 
 %% API
