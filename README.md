@@ -4,9 +4,9 @@ Rebar Template for Generating Riak Core Applications
 Usage
 -----
 
-Drop these templates into `~/.rebar/templates/`:
+Install these templates into `~/.rebar/templates/`:
 
-    cp riak* ~/.rebar/templates
+    make install
 
 Verify Erlang installation (>= R15B01):
 
