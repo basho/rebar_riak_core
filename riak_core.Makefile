@@ -1,4 +1,4 @@
-REBAR = $(shell pwd)/rebar
+REBAR = $(shell pwd)/rebar || `which rebar`
 .PHONY: deps
 
 all: deps compile
