@@ -37,14 +37,7 @@
 {template, "riak_core_ring_event_handler.erl", "src/{{appid}}_ring_event_handler.erl"}.
 {template, "riak_core_sup.erl",                "src/{{appid}}_sup.erl"}.
 {template, "riak_core_vnode.erl",              "src/{{appid}}_vnode.erl"}.
-{template, "riak_core_wm_ping.erl",            "src/{{appid}}_wm_ping.erl"}.
 
 {template, "riak_core.app.src",                "src/{{appid}}.app.src"}.
 {template, "riak_core.erl",                    "src/{{appid}}.erl"}.
 {template, "riak_core.hrl",                    "src/{{appid}}.hrl"}.
-
-
-%% ./apps
-{dir, "apps/{{appid}}"}.
-{symlink, "../../src",  "apps/{{appid}}/src"}.
-{symlink, "../../ebin", "apps/{{appid}}/ebin"}.
