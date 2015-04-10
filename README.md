@@ -76,7 +76,7 @@ Verify that the nodes are up and running:
 
 You should see four `pong` replies.  At this point it is worth saying that you have four **INDIVIDUAL** firstapp nodes running.  They are **NOT** aware of each other yet. In order to form a cluster you have to _join_ the nodes. That has to be done only once. If a node, or the entire cluster, goes down it will remember the nodes it was connected to.
 
-    for d in dev/dev{2,3,4}; do $d/bin/firstapp-admin join firstapp1@127.0.0.1; done
+    for d in dev/dev{2,3,4}; do $d/bin/firstapp-admin cluster join firstapp1@127.0.0.1; done
 
 Finally, to make sure they really all agree on the shape of the cluster you can ask if the _ring_ is "ready."
 
